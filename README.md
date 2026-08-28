@@ -1,0 +1,1 @@
+# palwakf_mind_assistant
