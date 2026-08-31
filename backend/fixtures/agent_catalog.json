@@ -1,0 +1,10 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "roles": [
+    "PLANNER",
+    "REVIEWER",
+    "TESTER",
+    "SECURITY"
+  ],
+  "runtime": "EXTERNAL_AGENTIC_AI_CONTRACT"
+}

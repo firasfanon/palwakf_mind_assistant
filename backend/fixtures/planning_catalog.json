@@ -1,0 +1,30 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "projects": {
+    "PALWAKF_MIND_ASSISTANT": {
+      "goal_templates": [
+        "Implement governed integrated development"
+      ],
+      "dependencies": [
+        "WORKSPACE_DRIVE",
+        "GITHUB",
+        "AGENTIC_AI"
+      ],
+      "risks": [
+        "REMOTE_NOT_INTEGRATED"
+      ]
+    },
+    "PAL_EYES": {
+      "goal_templates": [
+        "Review public product change"
+      ],
+      "dependencies": [
+        "GITHUB",
+        "VERCEL"
+      ],
+      "risks": [
+        "EXTERNAL_PROJECT_READ_ONLY"
+      ]
+    }
+  }
+}

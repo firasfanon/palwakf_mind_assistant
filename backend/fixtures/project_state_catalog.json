@@ -1,0 +1,64 @@
+[
+  {
+    "project_id": "PAL_EYES",
+    "display_name": "بعيون فلسطينية / Pal Eyes",
+    "source_mode": "FIXTURE_DERIVED",
+    "observed_at": "2026-08-29T20:00:00+00:00",
+    "repository": "firasfanon/palwakf_Eyes",
+    "default_branch": "main",
+    "head_sha": "c67ff5e",
+    "active_branch": "agent/pal-eyes-vercel-preview-foundation-v1",
+    "task_id": null,
+    "task_status": "UNKNOWN",
+    "baseline_ref": "PAL_EYES_R9_STREAM",
+    "dependencies": [
+      "GITHUB",
+      "WORKSPACE_DRIVE"
+    ],
+    "risks": [
+      "TASK_AUTHORITY_UNAVAILABLE"
+    ],
+    "production_readiness_level": "UNKNOWN",
+    "production_readiness_status": "NOT_CERTIFIED",
+    "next_safe_action": "RECONCILE_CURRENT_GITHUB_AND_DRIVE_STATE_BEFORE_MUTATION",
+    "current_state_ref": "drive:PAL_EYES_CURRENT_STATE_V1_20260822",
+    "source_refs": {
+      "github": "fixture:github:PAL_EYES",
+      "task": "unavailable:workspace:task",
+      "baseline": "fixture:drive:PAL_EYES_BASELINE",
+      "readiness": "fixture:drive:PAL_EYES_READINESS"
+    }
+  },
+  {
+    "project_id": "PALWAKF_MIND_ASSISTANT",
+    "display_name": "PalWakf Mind Assistant",
+    "source_mode": "FIXTURE_DERIVED",
+    "observed_at": "2026-08-29T22:56:58+00:00",
+    "repository": "firasfanon/palwakf_mind_assistant",
+    "default_branch": "main",
+    "head_sha": "8fc746291043a9de9b0b19c477a2d32ae1a06e8a",
+    "active_branch": null,
+    "task_id": "BATCH_0_5_PROJECT_DIGITAL_TWIN",
+    "task_status": "LOCAL_PLANNING",
+    "baseline_ref": null,
+    "dependencies": [
+      "GITHUB",
+      "WORKSPACE_DRIVE",
+      "B0_4_POST_TARGET_SHA256_69A86A83134C3127E394B87783E9D6A3DE68099F80CF117DC4F5D13FF42ED2A9"
+    ],
+    "risks": [
+      "REMOTE_BOOTSTRAP_ONLY",
+      "LOCAL_AHEAD_OF_REMOTE"
+    ],
+    "production_readiness_level": "L2_PRODUCT",
+    "production_readiness_status": "NOT_INTEGRATED_NOT_PRODUCTION",
+    "next_safe_action": "BUILD_AND_VERIFY_B0_5_LOCALLY_BEFORE_ANY_REMOTE_RECONCILIATION",
+    "current_state_ref": "drive:PALWAKF_MIND_ASSISTANT_CURRENT_STATE_V1_20260827",
+    "source_refs": {
+      "github": "fixture:github:PALWAKF_MIND_ASSISTANT",
+      "task": "fixture:drive:BATCH_0_5",
+      "baseline": "unknown:baseline",
+      "readiness": "fixture:drive:CURRENT_STATE"
+    }
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "scenarios": [
+    {
+      "scenario_id": "SIM-ALLOW",
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "capability_id": "repo.patch.simulate",
+      "requested_paths": [
+        "README.md"
+      ],
+      "expected": "SIMULATED"
+    },
+    {
+      "scenario_id": "DENY-WRITE",
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "capability_id": "repo.write",
+      "requested_paths": [
+        "README.md"
+      ],
+      "expected": "DENIED"
+    }
+  ]
+}

@@ -1,0 +1,297 @@
+{
+  "project_id": "PALWAKF_MIND_ASSISTANT",
+  "batch": "BATCH_0_4_CONTEXT_AND_TRUST_FOUNDATION",
+  "classification": "LOCAL_CANDIDATE_NOT_REMOTE_NOT_INTEGRATED",
+  "files": [
+    {
+      "path": ".env.example",
+      "sha256": "38a0b31e6c6447b7ae173ae994878435b32d326d9f560d7568ac4c9e9bca3a0d",
+      "size": 225
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "75dc49c6e0977e62cae711d4b78a611962ca486ce3197de228b1ca7a71ab922b",
+      "size": 907
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "84b818ecf40cb8ee5fb573daaaa8226bf56058b5cd7518433d1f2afe738326c2",
+      "size": 191
+    },
+    {
+      "path": "BATCH_0_4_ACCEPTANCE.md",
+      "sha256": "730822a3aad4d69c57a452637b714ea724cd955d2565b622874c347e6308b4da",
+      "size": 1958
+    },
+    {
+      "path": "README.md",
+      "sha256": "87ab97b4af48c5b8e54b6f1327053a05efbe2fd3df75ae648492325e082a3cec",
+      "size": 3074
+    },
+    {
+      "path": "RUN.ps1",
+      "sha256": "51967035db43aa5ff2fbc1e80f320475c6edba3682f03f057ef390f87ee4706f",
+      "size": 4638
+    },
+    {
+      "path": "SECOND_BATCH_ACCEPTANCE.md",
+      "sha256": "e97fcb81a0ed382ae260144fd707375a10a026ea3e731d502fbde7ab11621c02",
+      "size": 2105
+    },
+    {
+      "path": "VERIFY.ps1",
+      "sha256": "3ff8c5a45fd7341989c08ca395293444ff84c1b48acb4236ab3c30b31a819c8b",
+      "size": 1256
+    },
+    {
+      "path": "backend/.pytest_cache/.gitignore",
+      "sha256": "3ed731b65d06150c138e2dadb0be0697550888a6b47eb8c45ecc9adba8b8e9bd",
+      "size": 37
+    },
+    {
+      "path": "backend/.pytest_cache/CACHEDIR.TAG",
+      "sha256": "37dc88ef9a0abeddbe81053a6dd8fdfb13afb613045ea1eb4a5c815a74a3bde4",
+      "size": 191
+    },
+    {
+      "path": "backend/.pytest_cache/README.md",
+      "sha256": "73fd6fccdd802c419a6b2d983d6c3173b7da97558ac4b589edec2dfe443db9ad",
+      "size": 302
+    },
+    {
+      "path": "backend/.pytest_cache/v/cache/nodeids",
+      "sha256": "d1a33187702fe3dc34dfbab609980ae7ef59ea84fd5801adcd43a27d399ea22d",
+      "size": 2428
+    },
+    {
+      "path": "backend/fixtures/README.md",
+      "sha256": "7ec7a2145648237b6b68f494c5e0600659703d8173f208ab5b5bf15271f5ba9c",
+      "size": 533
+    },
+    {
+      "path": "backend/fixtures/authority_catalog.json",
+      "sha256": "02d7573dcada8668bfe1c7fbb7797b2a48b861094b45f9ecb8f05917ae585fce",
+      "size": 3830
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "sha256": "9a3232ef5c4aaf64232e750bccde63a15a94f7d1a7cd9c61982c7e2f3beea3cf",
+      "size": 694
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/__init__.py",
+      "sha256": "bb3bf56e1375c7e9d3488b3b4228369e76d1710553ab5de27f212fed37280efe",
+      "size": 44
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/adapters/drive_readonly.py",
+      "sha256": "063a8b29f390227fd3648b7bc707380031ad247a6a9c68c07b689f7fedc896b2",
+      "size": 7832
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/adapters/fixture_loader.py",
+      "sha256": "6fac9ad2e647a308e24ab0414358edd1b3a00cb2479fecc3fd07ac5ccaeb9c1c",
+      "size": 421
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/api/app.py",
+      "sha256": "fd18b956d160317a50ec8b8c67a6b8dd43be6390ab155423467ad3bf7950bc5d",
+      "size": 5599
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/domain/models.py",
+      "sha256": "db07326eb0e003e201b76fb163b43a3cafb6e56bbd483d124451cc663d7700ea",
+      "size": 5919
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/services/authority_resolver.py",
+      "sha256": "57c26b1082bf0010ed6abcfb6a4481f9b81f4a110501468b8510451a882d5674",
+      "size": 4471
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/services/conflict_detector.py",
+      "sha256": "6d82a405fd04ce86b1a7d8b891dec6a42eda4e548588bbd08fcbece2025dc929",
+      "size": 3237
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/services/context_compiler.py",
+      "sha256": "5e4f1611b724561c1ac35365baae8ebd49bb6780a8a5ba57a3ceca5743f7045c",
+      "size": 7061
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/services/product_service.py",
+      "sha256": "cf5ae8d7c66e34912716d3ab5b3e05afc3eb52bed285cf16d920b6f1fffd5d9f",
+      "size": 16133
+    },
+    {
+      "path": "backend/src/palwakf_mind_assistant/services/trust_engine.py",
+      "sha256": "eb4a01014b7f46e68c84c444cc6fbc353ec32e351a09346011a463fbfb601e06",
+      "size": 3645
+    },
+    {
+      "path": "backend/tests/test_api.py",
+      "sha256": "987c8db8439850b9d7511206409d51cdc97282cbe89a92a260740a80bd37df26",
+      "size": 4056
+    },
+    {
+      "path": "backend/tests/test_authority_resolver.py",
+      "sha256": "53b7504e5025798c65d3a550fc76c78139f17449d11136dc5470cabf00d6a78b",
+      "size": 4133
+    },
+    {
+      "path": "backend/tests/test_conflict_detector.py",
+      "sha256": "e9689882b3e1feb306463a17107503c55591897d0fb767dcb586c793b08f6dfa",
+      "size": 1400
+    },
+    {
+      "path": "backend/tests/test_context_compiler.py",
+      "sha256": "56634c87d65a24023be22063b4730491e18cb915d4d8f0b39fc4a6fd32f4b33f",
+      "size": 3369
+    },
+    {
+      "path": "backend/tests/test_drive_readonly.py",
+      "sha256": "990a0c11a5dde71390facc16f0cbc9de3fccee7b31009778b8f808af31cc76b3",
+      "size": 2471
+    },
+    {
+      "path": "backend/tests/test_product_service.py",
+      "sha256": "c22e0f964cedc2d54595e6c7cb2fe85e9a7d1105456f2ec3d846f2aa873f3151",
+      "size": 3536
+    },
+    {
+      "path": "backend/tests/test_trust_engine.py",
+      "sha256": "3fc09128d7d80e58d377d6b502a6ba7d8ceb45bcb0c48abc2a0621fb2388bc97",
+      "size": 1315
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "27e7f9586fa0d63125302cbc6426113377ee1e4b82957234d7c52ff4a16930e2",
+      "size": 1579
+    },
+    {
+      "path": "docs/BATCH_0_4_IMPLEMENTATION_SLICE.md",
+      "sha256": "64ce1c88adfd2734e6b8c254f996442e1fd173cede4bf947c05e752b5279dfbc",
+      "size": 2267
+    },
+    {
+      "path": "docs/SECURITY_THREAT_MODEL.md",
+      "sha256": "f56c6018eb452e732dcd2fa36bb335326306762e0c93b9e032f8003a758b85c3",
+      "size": 1820
+    },
+    {
+      "path": "docs/UX_PRODUCT_MAP.md",
+      "sha256": "0c1ae50fc8f029ecb46094cd445ee7f7fe0febfe5b47cf00dbaf9817703ba11b",
+      "size": 1295
+    },
+    {
+      "path": "evidence/BATCH_0_4_LOCAL_BUILD_RESULTS_20260829.txt",
+      "sha256": "65144d512f332cfcb95a417700c821585d9808e4d6d0231a91f882e137617be1",
+      "size": 1104
+    },
+    {
+      "path": "evidence/FIRST_BATCH_BROWSER_RENDER_20260829.png",
+      "sha256": "d202c3c4968a88417d33d4876b5360bb2be9d61d5ec3024a9c53409b8f74927c",
+      "size": 90014
+    },
+    {
+      "path": "evidence/FIRST_BATCH_TEST_CLOSEOUT_20260829.md",
+      "sha256": "4ef439c2e21cd97629a3ba693e5b574a7a0f51a77d21317e9f831db2dacfc4bc",
+      "size": 999
+    },
+    {
+      "path": "evidence/SECOND_BATCH_LOCAL_TEST_RESULTS.txt",
+      "sha256": "56939509a21c93a39c53c39875ea07201ab306e58ea1de2b754320b4e4b3680c",
+      "size": 1222
+    },
+    {
+      "path": "frontend/analysis_options.yaml",
+      "sha256": "c1e9534c05acb3643e72a82ad3d92d56d2ba9b0df2add014c18f7e1d462f24e4",
+      "size": 44
+    },
+    {
+      "path": "frontend/lib/main.dart",
+      "sha256": "660eb5f7fa246e33238fb7b3a6229be333e86b2220afb1081501f6dc8e9e4f43",
+      "size": 117
+    },
+    {
+      "path": "frontend/lib/src/api_client.dart",
+      "sha256": "dc337bd8966c803a2ed89766d0302004ff14d798e1a01df927ff7edd10e1c92c",
+      "size": 3246
+    },
+    {
+      "path": "frontend/lib/src/app.dart",
+      "sha256": "6b22d1f996226e340c18a9cd0e91ac6003f48b04001686874834628cc0a26b17",
+      "size": 722
+    },
+    {
+      "path": "frontend/lib/src/design/mind_theme.dart",
+      "sha256": "d80c15e0741c81d0f2e8cb0dad1bba585936ea208b82fff6922a20fb82f5e018",
+      "size": 1338
+    },
+    {
+      "path": "frontend/lib/src/models/api_models.dart",
+      "sha256": "7f3210e5ed5a862bb1955d816016f5dddc5ffd12324eb3dea5d598eb0c9392d7",
+      "size": 13084
+    },
+    {
+      "path": "frontend/lib/src/screens/assistant_screen.dart",
+      "sha256": "f9d83c7db4f700fd23f9df2fdaf5aba4b23bd79cbab583e1980085f1f70d6824",
+      "size": 9216
+    },
+    {
+      "path": "frontend/lib/src/screens/conflicts_screen.dart",
+      "sha256": "209ff8103cf3b2c2cb382a518edfe36cbe7101db08c60753dd5649374dc34665",
+      "size": 3126
+    },
+    {
+      "path": "frontend/lib/src/screens/dashboard_screen.dart",
+      "sha256": "0bc9652b600a5bb7130acc0a1c1c87e9b13ffe58a384b7397d35711eda4c0208",
+      "size": 4987
+    },
+    {
+      "path": "frontend/lib/src/screens/explorer_screen.dart",
+      "sha256": "75c052364e93ff965ed048aff6b23aee74786fe4cbff8aa038ae25cc1033774a",
+      "size": 3685
+    },
+    {
+      "path": "frontend/lib/src/screens/project_mind_screen.dart",
+      "sha256": "c5a660400747fecfd7f6a56149f20531feb5c97663d082b17a0c7121162a62af",
+      "size": 5925
+    },
+    {
+      "path": "frontend/lib/src/screens/sources_screen.dart",
+      "sha256": "a06dda2e936293fd0ca85600252664723f379f90f52b9e897e7c1d609a855fbb",
+      "size": 3205
+    },
+    {
+      "path": "frontend/lib/src/shell/product_shell.dart",
+      "sha256": "c385a987ab4aafe55f45ba8d5abf6fbe2618e5b02fe1da8ae700dab733a9f1b8",
+      "size": 9035
+    },
+    {
+      "path": "frontend/lib/src/widgets/common.dart",
+      "sha256": "222fbbe8f3d06cdcf7999f998bc85bd4b7efe08bbd2d350dcc7233e9983b2054",
+      "size": 6652
+    },
+    {
+      "path": "frontend/pubspec.yaml",
+      "sha256": "ce350dc1aaff888e2601d8415cef1ae25d98138796d27e896ad1b35655d30e9e",
+      "size": 274
+    },
+    {
+      "path": "frontend/test/product_shell_test.dart",
+      "sha256": "e838e6a4dd0aec037c5f9092e678e4e1b3eed4384425c918aa329e0a71459211",
+      "size": 5702
+    },
+    {
+      "path": "frontend/web/index.html",
+      "sha256": "2fde1babcc0d4dd110166ac99d126acf9943b6b02f7979d7558d56ad0dc6963b",
+      "size": 515
+    },
+    {
+      "path": "frontend/web/manifest.json",
+      "sha256": "a4fe6fdc21ab49995693e57d85ccd50cb52e72782c1a9c1bf705475a73b2b3d4",
+      "size": 275
+    }
+  ]
+}

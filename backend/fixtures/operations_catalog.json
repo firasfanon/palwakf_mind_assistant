@@ -1,0 +1,34 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "watchers": [
+    {
+      "watcher_id": "WATCH-DRIFT",
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "condition": "SOURCE_STALE_OR_DRIFT",
+      "action": "NOTIFY_OR_PROPOSE_ONLY"
+    }
+  ],
+  "connector_health": [
+    {
+      "connector_id": "GOOGLE_DRIVE",
+      "status": "READY",
+      "detail": "Fixture-derived read-only health"
+    }
+  ],
+  "model_health": [
+    {
+      "provider_id": "DETERMINISTIC_GROUNDED",
+      "status": "READY",
+      "detail": "Provider-neutral deterministic mode"
+    }
+  ],
+  "costs": [
+    {
+      "observation_id": "COST-LOCAL-1",
+      "provider_id": "DETERMINISTIC_GROUNDED",
+      "unit": "requests",
+      "amount": 0.0,
+      "budget_state": "OK"
+    }
+  ]
+}

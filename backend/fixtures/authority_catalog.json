@@ -1,0 +1,79 @@
+[
+  {
+    "owner_project_id": "PAL_EYES",
+    "authority_type": "PROJECT_CURRENT_STATE",
+    "lifecycle_status": "CURRENT",
+    "canonical_location": "https://docs.google.com/document/d/1aDoqFRr0CXdJ34c4Os6Hosiz62FG48fVH_LOvBzJ6kQ/edit",
+    "source_id": "1aDoqFRr0CXdJ34c4Os6Hosiz62FG48fVH_LOvBzJ6kQ",
+    "source_ref": "drive:PAL_EYES_CURRENT_STATE_V1_20260822",
+    "title": "PAL_EYES_CURRENT_STATE_V1_20260822",
+    "supersedes": [],
+    "metadata": {"classification": "CANONICAL_PROJECT_CURRENT_STATE"}
+  },
+  {
+    "owner_project_id": "PAL_EYES",
+    "authority_type": "PORTFOLIO_REGISTRY",
+    "lifecycle_status": "ACTIVE",
+    "canonical_location": "https://docs.google.com/spreadsheets/d/1qsWSzW5UaFbc2IbThL2e0zCdWo4nUH7X843HFZbB8gk/edit",
+    "source_id": "1qsWSzW5UaFbc2IbThL2e0zCdWo4nUH7X843HFZbB8gk",
+    "source_ref": "drive:PALWAKF_PORTFOLIO_MASTER_REGISTRY_AR",
+    "title": "PALWAKF_PORTFOLIO_MASTER_REGISTRY_AR",
+    "supersedes": [],
+    "metadata": {"classification": "PORTFOLIO_MASTER_REGISTRY"}
+  },
+  {
+    "owner_project_id": "PAL_EYES",
+    "authority_type": "DOCUMENT_AUTHORITY_INDEX",
+    "lifecycle_status": "ACTIVE",
+    "canonical_location": "https://docs.google.com/spreadsheets/d/114NDhaM5c3x3aXn7P10McjlbjUru3YVKXD71EqeqURA/edit",
+    "source_id": "114NDhaM5c3x3aXn7P10McjlbjUru3YVKXD71EqeqURA",
+    "source_ref": "drive:PALWAKF_DOCUMENT_AUTHORITY_AND_AWARENESS_INDEX_V1",
+    "title": "PALWAKF_DOCUMENT_AUTHORITY_AND_AWARENESS_INDEX_V1",
+    "supersedes": [],
+    "metadata": {"classification": "DOCUMENT_AUTHORITY_INDEX"}
+  },
+  {
+    "owner_project_id": "PALWAKF_MIND_ASSISTANT",
+    "authority_type": "PROJECT_CURRENT_STATE",
+    "lifecycle_status": "CURRENT",
+    "canonical_location": "https://docs.google.com/document/d/1kb5As0ySDatQXC25LjCiNdAkqTi8Jy2Y8T56niK_qYo/edit",
+    "source_id": "1kb5As0ySDatQXC25LjCiNdAkqTi8Jy2Y8T56niK_qYo",
+    "source_ref": "drive:PALWAKF_MIND_ASSISTANT_CURRENT_STATE_V1_20260827",
+    "title": "PALWAKF_MIND_ASSISTANT_CURRENT_STATE_V1_20260827",
+    "supersedes": [],
+    "metadata": {"classification": "CANONICAL_PROJECT_CURRENT_STATE"}
+  },
+  {
+    "owner_project_id": "PALWAKF_MIND_ASSISTANT",
+    "authority_type": "PROJECT_GOVERNANCE",
+    "lifecycle_status": "CURRENT",
+    "canonical_location": "https://docs.google.com/document/d/1pOYCaL54eaXJgvY2I8JEgzjcc8fkIAN8OyjIHZNdJX0/edit",
+    "source_id": "1pOYCaL54eaXJgvY2I8JEgzjcc8fkIAN8OyjIHZNdJX0",
+    "source_ref": "drive:PALWAKF_MIND_ASSISTANT_DEVELOPMENT_MASTER_PLAN_CURRENT",
+    "title": "PALWAKF_MIND_ASSISTANT_DEVELOPMENT_MASTER_PLAN_CURRENT",
+    "supersedes": [],
+    "metadata": {"classification": "PROJECT_DEVELOPMENT_MASTER_PLAN"}
+  },
+  {
+    "owner_project_id": "PALWAKF_MIND_ASSISTANT",
+    "authority_type": "PROJECT_GOVERNANCE",
+    "lifecycle_status": "ACTIVE",
+    "canonical_location": "https://docs.google.com/document/d/1lmikhW6m4HLFMks_fOq6Ghdjo5b5EGlM5v0Ab2SXwMQ/edit",
+    "source_id": "1lmikhW6m4HLFMks_fOq6Ghdjo5b5EGlM5v0Ab2SXwMQ",
+    "source_ref": "drive:PALWAKF_MIND_ASSISTANT_SECOND_INTEGRATED_PRODUCT_BATCH_V1_CURRENT_20260829",
+    "title": "PALWAKF_MIND_ASSISTANT_SECOND_INTEGRATED_PRODUCT_BATCH_V1_CURRENT_20260829",
+    "supersedes": [],
+    "metadata": {"classification": "PROJECT_ACTIVE_TASK_CONTRACT"}
+  },
+  {
+    "owner_project_id": "PALWAKF_MIND_ASSISTANT",
+    "authority_type": "DOCUMENT_AUTHORITY_INDEX",
+    "lifecycle_status": "ACTIVE",
+    "canonical_location": "https://docs.google.com/spreadsheets/d/114NDhaM5c3x3aXn7P10McjlbjUru3YVKXD71EqeqURA/edit",
+    "source_id": "114NDhaM5c3x3aXn7P10McjlbjUru3YVKXD71EqeqURA",
+    "source_ref": "drive:PALWAKF_DOCUMENT_AUTHORITY_AND_AWARENESS_INDEX_V1",
+    "title": "PALWAKF_DOCUMENT_AUTHORITY_AND_AWARENESS_INDEX_V1",
+    "supersedes": [],
+    "metadata": {"classification": "DOCUMENT_AUTHORITY_INDEX"}
+  }
+]

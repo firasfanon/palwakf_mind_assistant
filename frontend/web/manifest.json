@@ -1,0 +1,10 @@
+{
+  "name": "PalWakf Mind Assistant",
+  "short_name": "PalWakf Mind",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#07111E",
+  "theme_color": "#07111E",
+  "description": "PalWakf knowledge intelligence and review workspace",
+  "orientation": "any"
+}

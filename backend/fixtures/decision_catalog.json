@@ -1,0 +1,17 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "decisions": [
+    {
+      "decision_id": "DEC-MIND-001",
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "title": "Keep sovereign knowledge in Drive",
+      "status": "APPROVED",
+      "rationale": "Avoid source-of-truth duplication",
+      "alternatives": [
+        "SECOND_CANONICAL_DB",
+        "DRIVE_SOVEREIGN"
+      ],
+      "selected": "DRIVE_SOVEREIGN"
+    }
+  ]
+}

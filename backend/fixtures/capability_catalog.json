@@ -1,0 +1,59 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "capabilities": [
+    {
+      "capability_id": "repo.read",
+      "name": "Repository read",
+      "risk_class": "LOW",
+      "mutation_class": "READ_ONLY",
+      "requires_explicit_approval": false
+    },
+    {
+      "capability_id": "repo.patch.simulate",
+      "name": "Patch simulation",
+      "risk_class": "MEDIUM",
+      "mutation_class": "SIMULATION_ONLY",
+      "requires_explicit_approval": false
+    },
+    {
+      "capability_id": "repo.write",
+      "name": "Repository mutation",
+      "risk_class": "HIGH",
+      "mutation_class": "SOURCE_MUTATION",
+      "requires_explicit_approval": true
+    },
+    {
+      "capability_id": "canonical.write",
+      "name": "Canonical semantic write",
+      "risk_class": "CRITICAL",
+      "mutation_class": "SOVEREIGN_MUTATION",
+      "requires_explicit_approval": true
+    }
+  ],
+  "envelopes": [
+    {
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "allowed": [
+        "repo.read",
+        "repo.patch.simulate"
+      ],
+      "denied": [
+        "repo.write",
+        "canonical.write"
+      ],
+      "source_ref": "drive:mind:authority"
+    },
+    {
+      "project_id": "PAL_EYES",
+      "allowed": [
+        "repo.read"
+      ],
+      "denied": [
+        "repo.patch.simulate",
+        "repo.write",
+        "canonical.write"
+      ],
+      "source_ref": "drive:paleyes:authority"
+    }
+  ]
+}

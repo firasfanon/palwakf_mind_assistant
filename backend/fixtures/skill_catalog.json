@@ -1,0 +1,276 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "skills": [
+    {
+      "skill_id": "PALWAKF_WINDOWS_POWERSHELL_ARTIFACT_HANDOFF_PROTOCOL_V1",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "owner_scope": "GLOBAL",
+      "level": "GLOBAL",
+      "applies_to": [
+        "artifact",
+        "powershell",
+        "handoff"
+      ],
+      "triggers": [
+        "package",
+        "artifact",
+        "zip",
+        "powershell",
+        "handoff",
+        "runner"
+      ],
+      "preconditions": [
+        "TRUSTED_SOURCE_IDENTITY"
+      ],
+      "required_inputs": [
+        "source_sha256"
+      ],
+      "authorized_operations": [
+        "ADVISE",
+        "VALIDATE_PACKAGE"
+      ],
+      "forbidden_operations": [
+        "REMOTE_MUTATION",
+        "PRODUCTION"
+      ],
+      "execution_steps": [
+        "verify source",
+        "build single fail-stop runner",
+        "verify archive"
+      ],
+      "fail_closed_conditions": [
+        "SOURCE_IDENTITY_UNKNOWN"
+      ],
+      "expected_outputs": [
+        "verified artifact"
+      ],
+      "evidence_requirements": [
+        "SHA256",
+        "ZIP_CRC",
+        "MANIFEST"
+      ],
+      "regression_tests": [
+        "flat root",
+        "single fail-stop runner"
+      ],
+      "known_failures": [
+        "ARTIFACT_NESTED_ROOT_HANDOFF_DEFECT"
+      ],
+      "supersedes": [],
+      "last_validated_at": "2026-08-29T00:00:00Z",
+      "provenance_ref": "drive:skills#64"
+    },
+    {
+      "skill_id": "PALWAKF_FLUTTER_PRODUCT_FIRST_RUN_GATE_V1",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "owner_scope": "DOMAIN:FLUTTER",
+      "level": "DOMAIN",
+      "applies_to": [
+        "flutter",
+        "browser",
+        "responsive",
+        "uat"
+      ],
+      "triggers": [
+        "flutter",
+        "browser",
+        "responsive",
+        "uat",
+        "viewport",
+        "widget"
+      ],
+      "preconditions": [
+        "TARGET_DEVICE_AVAILABLE"
+      ],
+      "required_inputs": [
+        "route_or_surface"
+      ],
+      "authorized_operations": [
+        "ADVISE",
+        "VERIFY"
+      ],
+      "forbidden_operations": [
+        "PRODUCTION_CLAIM_FROM_TESTS"
+      ],
+      "execution_steps": [
+        "format",
+        "analyze",
+        "test",
+        "build web",
+        "browser UAT"
+      ],
+      "fail_closed_conditions": [
+        "NATIVE_GATE_NOT_RUN"
+      ],
+      "expected_outputs": [
+        "runtime evidence"
+      ],
+      "evidence_requirements": [
+        "ANALYZE",
+        "TEST",
+        "BUILD_WEB",
+        "BROWSER_UAT"
+      ],
+      "regression_tests": [
+        "800x600",
+        "390x844"
+      ],
+      "known_failures": [
+        "RENDERFLEX_OVERFLOW",
+        "UNICODE_BROWSER_DEFECT"
+      ],
+      "supersedes": [],
+      "last_validated_at": "2026-08-29T00:00:00Z",
+      "provenance_ref": "drive:skills#73"
+    },
+    {
+      "skill_id": "PALWAKF_DURABLE_PROJECT_STATE_CHECKPOINT_AND_RESUME_V1",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "owner_scope": "GLOBAL",
+      "level": "GLOBAL",
+      "applies_to": [
+        "resume",
+        "reconcile",
+        "project state"
+      ],
+      "triggers": [
+        "resume",
+        "reconcile",
+        "continue",
+        "\u0627\u0633\u062a\u0626\u0646\u0627\u0641",
+        "\u0627\u0633\u062a\u0643\u0645\u0627\u0644",
+        "current state",
+        "github",
+        "drive"
+      ],
+      "preconditions": [
+        "LIVE_AUTHORITY_READ"
+      ],
+      "required_inputs": [
+        "project_id"
+      ],
+      "authorized_operations": [
+        "ADVISE",
+        "RECONCILE_READ_ONLY"
+      ],
+      "forbidden_operations": [
+        "INFER_UNKNOWN_AS_PASS"
+      ],
+      "execution_steps": [
+        "read GitHub",
+        "read Drive",
+        "resolve supersession",
+        "emit next safe action"
+      ],
+      "fail_closed_conditions": [
+        "AUTHORITY_UNKNOWN",
+        "DRIFT_UNCLASSIFIED"
+      ],
+      "expected_outputs": [
+        "resume state package"
+      ],
+      "evidence_requirements": [
+        "LIVE_GITHUB",
+        "CURRENT_DRIVE_STATE"
+      ],
+      "regression_tests": [
+        "fresh session resume"
+      ],
+      "known_failures": [
+        "STALE_SESSION_MEMORY"
+      ],
+      "supersedes": [],
+      "last_validated_at": "2026-08-29T00:00:00Z",
+      "provenance_ref": "drive:skills#69"
+    },
+    {
+      "skill_id": "DATABASE_LINK_REPAIR_AFTER_GITHUB_PROMOTION_PROTOCOL_V1",
+      "version": "1.0.0",
+      "status": "ACTIVE",
+      "owner_scope": "DOMAIN:DATABASE",
+      "level": "DOMAIN",
+      "applies_to": [
+        "database",
+        "supabase",
+        "rpc"
+      ],
+      "triggers": [
+        "database",
+        "supabase",
+        "rpc",
+        "postgrest",
+        "sql",
+        "db"
+      ],
+      "preconditions": [
+        "DB_ERROR_EVIDENCE"
+      ],
+      "required_inputs": [
+        "sanitized_error"
+      ],
+      "authorized_operations": [
+        "DIAGNOSE_READ_ONLY"
+      ],
+      "forbidden_operations": [
+        "DB_MUTATION_WITHOUT_AUTHORIZATION"
+      ],
+      "execution_steps": [
+        "capture error",
+        "inspect contract",
+        "classify root cause"
+      ],
+      "fail_closed_conditions": [
+        "SECRET_EXPOSURE",
+        "MUTATION_NOT_AUTHORIZED"
+      ],
+      "expected_outputs": [
+        "root cause classification"
+      ],
+      "evidence_requirements": [
+        "HTTP_STATUS",
+        "SANITIZED_ERROR"
+      ],
+      "regression_tests": [
+        "secret-safe diagnostics"
+      ],
+      "known_failures": [
+        "SEARCH_PATH_MISMATCH"
+      ],
+      "supersedes": [],
+      "last_validated_at": "2026-08-17T00:00:00Z",
+      "provenance_ref": "drive:skills#53"
+    },
+    {
+      "skill_id": "PALWAKF_FLUTTER_FIRST_RUN_LEGACY_V0",
+      "version": "0.9.0",
+      "status": "SUPERSEDED",
+      "owner_scope": "DOMAIN:FLUTTER",
+      "level": "DOMAIN",
+      "applies_to": [
+        "flutter"
+      ],
+      "triggers": [
+        "flutter",
+        "uat"
+      ],
+      "preconditions": [],
+      "required_inputs": [],
+      "authorized_operations": [
+        "ADVISE"
+      ],
+      "forbidden_operations": [],
+      "execution_steps": [],
+      "fail_closed_conditions": [],
+      "expected_outputs": [],
+      "evidence_requirements": [],
+      "regression_tests": [],
+      "known_failures": [],
+      "supersedes": [],
+      "last_validated_at": "2026-08-01T00:00:00Z",
+      "provenance_ref": "drive:skills#legacy"
+    }
+  ]
+}

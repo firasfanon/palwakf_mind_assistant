@@ -1,0 +1,25 @@
+{
+  "source_mode": "FIXTURE_DERIVED",
+  "repositories": [
+    {
+      "project_id": "PALWAKF_MIND_ASSISTANT",
+      "repository": "firasfanon/palwakf_mind_assistant",
+      "default_branch": "main",
+      "ref": "main",
+      "head_sha": "8fc746291043a9de9b0b19c477a2d32ae1a06e8a",
+      "freshness": "CURRENT",
+      "files": [
+        "README.md"
+      ]
+    },
+    {
+      "project_id": "PAL_EYES",
+      "repository": "firasfanon/palwakf_Eyes",
+      "default_branch": "main",
+      "ref": "main",
+      "head_sha": "UNKNOWN",
+      "freshness": "UNKNOWN",
+      "files": []
+    }
+  ]
+}
