@@ -56,6 +56,11 @@ from palwakf_mind_assistant.domain.models import (
     VerificationBundle,
     VerificationReceipt,
 )
+from palwakf_mind_assistant.intersystem_review import (
+    LearningCandidateBundleV1,
+    MindReviewResultV1,
+    review_learning_bundle,
+)
 from palwakf_mind_assistant.services.authority_resolver import AuthorityResolver
 from palwakf_mind_assistant.services.product_service import ProductService
 
@@ -225,6 +230,15 @@ def create_app(
             str(payload.get("project_id", "")),
             tuple(str(item) for item in payload.get("actions", [])),
         )
+
+    @application.post(
+        "/v1/integration/learning-review",
+        response_model=MindReviewResultV1,
+    )
+    def integration_learning_review(
+        bundle: LearningCandidateBundleV1,
+    ) -> MindReviewResultV1:
+        return review_learning_bundle(product, bundle)
 
     @application.post("/v1/verification", response_model=VerificationBundle)
     def verification(payload: Annotated[dict, Body()]) -> VerificationBundle:
