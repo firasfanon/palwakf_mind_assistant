@@ -33,3 +33,6 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.vercel]
+entrypoint = "src.palwakf_mind_assistant.api.app:app"
