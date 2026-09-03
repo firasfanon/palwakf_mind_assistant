@@ -8,7 +8,6 @@ from palwakf_mind_assistant.intersystem_review import (
     review_learning_bundle,
 )
 
-
 SHA = "1" * 40
 
 
