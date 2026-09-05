@@ -56,6 +56,7 @@ from palwakf_mind_assistant.domain.models import (
     VerificationBundle,
     VerificationReceipt,
 )
+from palwakf_mind_assistant.four_system_l4 import mount_four_system_l4_mind
 from palwakf_mind_assistant.intersystem_review import (
     LearningCandidateBundleV1,
     MindReviewResultV1,
@@ -129,6 +130,7 @@ def create_app(
         for origin in os.getenv("MIND_ALLOWED_ORIGINS", "").split(",")
         if origin.strip()
     )
+    mount_four_system_l4_mind(application, product=product)
     application.add_middleware(
         CORSMiddleware,
         allow_origins=list(allowed_origins),
