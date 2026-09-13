@@ -6,6 +6,11 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, Field
 
 from palwakf_mind_assistant.domain.models import ContextRequest
+from palwakf_mind_assistant.pre_l5_review_enforcement import (
+    MindPreL5ReviewAssessmentV1,
+    MindPreL5ReviewContextV1,
+    MindPreL5ReviewEnforcer,
+)
 
 
 class LearningCandidateItemV1(BaseModel):
@@ -127,4 +132,131 @@ def review_learning_bundle(product: Any, bundle: LearningCandidateBundleV1) -> M
         conflict_count=len(conflicts),
         conflict_refs=conflict_refs,
         context_authority_status=authority_status,
+    )
+
+
+class MindPreL5EnforcedReviewResultV1(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    review: MindReviewResultV1
+    assessment: MindPreL5ReviewAssessmentV1
+
+    canonical_write_allowed: Literal[False] = False
+    mutation_mode: Literal["READ_ONLY"] = "READ_ONLY"
+
+
+def review_learning_bundle_pre_l5(
+    product: Any,
+    bundle: LearningCandidateBundleV1,
+    review_context: MindPreL5ReviewContextV1,
+) -> MindPreL5EnforcedReviewResultV1:
+    """Pre-L5 machine-enforced review path.
+
+    The historical L4 review function remains intact for evidence
+    reproducibility. New pre-L5 integration must call this wrapper.
+    """
+
+    context = product.compile_context(
+        ContextRequest(
+            message=(
+                "Review governed Agentic learning candidates "
+                "under pre-L5 enforcement without canonical "
+                "promotion."
+            ),
+            project_id=bundle.project_id,
+            task_id=bundle.task_id,
+        )
+    )
+
+    conflicts = tuple(
+        product.conflicts(bundle.project_id)
+    )
+
+    assessment = MindPreL5ReviewEnforcer().assess(
+        bundle=bundle,
+        review_context=review_context,
+        compiled_context=context,
+        conflicts=conflicts,
+    )
+
+    base = review_learning_bundle(
+        product,
+        bundle,
+    )
+
+    reject = set(
+        assessment.reject_candidate_ids
+    )
+
+    more_evidence = set(
+        assessment.force_more_evidence_candidate_ids
+    )
+
+    decisions: list[CandidateReviewDecisionV1] = []
+
+    for decision in base.candidate_reviews:
+        if decision.candidate_id in reject:
+            decisions.append(
+                decision.model_copy(
+                    update={
+                        "status": "REJECTED",
+                        "reasons": (
+                            "PRE_L5_DUPLICATE_LEARNING_CANDIDATE",
+                            "NO_CANONICAL_PROMOTION",
+                        ),
+                    }
+                )
+            )
+            continue
+
+        if decision.candidate_id in more_evidence:
+            reasons = tuple(
+                dict.fromkeys(
+                    (
+                        "PRE_L5_PROVENANCE_CONFLICT_"
+                        "STALENESS_OR_EVIDENCE_REVIEW_REQUIRED",
+                        *decision.reasons,
+                    )
+                )
+            )
+
+            decisions.append(
+                decision.model_copy(
+                    update={
+                        "status": "NEEDS_MORE_EVIDENCE",
+                        "reasons": reasons,
+                    }
+                )
+            )
+            continue
+
+        decisions.append(decision)
+
+    enforced_review = base.model_copy(
+        update={
+            "candidate_reviews": tuple(decisions),
+        }
+    )
+
+    if enforced_review.canonical_write_allowed is not False:
+        raise ValueError(
+            "MIND_SELF_PROMOTION_FORBIDDEN"
+        )
+
+    if enforced_review.mutation_mode != "READ_ONLY":
+        raise ValueError(
+            "MIND_REVIEW_MUTATION_MODE_FORBIDDEN"
+        )
+
+    if (
+        enforced_review.promotion_recommendation
+        != "HUMAN_WORKSPACE_REVIEW_REQUIRED"
+    ):
+        raise ValueError(
+            "MIND_PROMOTION_RECOMMENDATION_BOUNDARY_VIOLATION"
+        )
+
+    return MindPreL5EnforcedReviewResultV1(
+        review=enforced_review,
+        assessment=assessment,
     )
