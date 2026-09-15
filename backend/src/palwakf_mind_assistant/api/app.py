@@ -56,6 +56,11 @@ from palwakf_mind_assistant.domain.models import (
     VerificationBundle,
     VerificationReceipt,
 )
+from palwakf_mind_assistant.external_skill_review import (
+    ExternalSkillReviewRequest,
+    ExternalSkillReviewResult,
+    review_external_skill,
+)
 from palwakf_mind_assistant.intersystem_review import (
     LearningCandidateBundleV1,
     MindReviewResultV1,
@@ -157,7 +162,7 @@ def create_app(
             "status": "ok",
             "project_id": "PALWAKF_MIND_ASSISTANT",
             "mutation_mode": "READ_ONLY",
-                        "product_surface": (
+            "product_surface": (
                 "ASSISTANT_DASHBOARD_PROJECT_MIND_DIGITAL_TWIN_SKILLS_EXPLORER_"
                 "PLANNING_DECISIONS_VERIFICATION_SECURITY_ENGINEERING_REPOSITORY_"
                 "EXECUTION_AGENTS_LIFECYCLE_OPERATIONS"
@@ -199,7 +204,6 @@ def create_app(
     def conflicts(project_id: str):
         return product.conflicts(project_id)
 
-
     @application.get("/v1/skills", response_model=tuple[SkillObject, ...])
     def skills_registry() -> tuple[SkillObject, ...]:
         return product.list_skills()
@@ -207,6 +211,15 @@ def create_app(
     @application.post("/v1/skills/resolve", response_model=SkillResolutionResponse)
     def resolve_skills(request: SkillResolutionRequest) -> SkillResolutionResponse:
         return product.resolve_skills(request)
+
+    @application.post(
+        "/v1/skills/external/review",
+        response_model=ExternalSkillReviewResult,
+    )
+    def external_skill_review(
+        request: ExternalSkillReviewRequest,
+    ) -> ExternalSkillReviewResult:
+        return review_external_skill(request)
 
     @application.post("/v1/planning", response_model=PlanningResponse)
     def planning(request: PlanningRequest) -> PlanningResponse:
@@ -243,8 +256,7 @@ def create_app(
     @application.post("/v1/verification", response_model=VerificationBundle)
     def verification(payload: Annotated[dict, Body()]) -> VerificationBundle:
         receipts = tuple(
-            VerificationReceipt.model_validate(item)
-            for item in payload.get("receipts", [])
+            VerificationReceipt.model_validate(item) for item in payload.get("receipts", [])
         )
         return product.verification(str(payload.get("project_id", "")), receipts)
 
