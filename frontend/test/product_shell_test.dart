@@ -336,4 +336,25 @@ void main() {
     expect(find.text('AUTH RESOLVED'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  test('operations payload exposes L5 rebuild and resume evidence', () {
+    final view = GovernedCapabilityView.fromJson('operations', {
+      'source_mode': 'FIXTURE_DERIVED',
+      'mutation_mode': 'READ_ONLY',
+      'recovery': {
+        'status': 'PASS_REBUILT_FROM_ACTIVE_SOURCES',
+        'accepted_knowledge_loss_count': 0,
+      },
+      'resume': {'resume_safe': true},
+      'readiness': [
+        {'dimension': 'ZERO_LOSS_REBUILD', 'status': 'PASS'},
+        {'dimension': 'LIVE_SOURCE_VERIFICATION', 'status': 'REVIEW'},
+      ],
+    });
+    expect(view.trustLabel, 'FIXTURE_DERIVED');
+    expect(view.details, contains('REBUILD PASS_REBUILT_FROM_ACTIVE_SOURCES'));
+    expect(view.details, contains('ACCEPTED KNOWLEDGE LOSS 0'));
+    expect(view.details, contains('RESUME SAFE true'));
+    expect(view.details, contains('READINESS BLOCKERS NONE'));
+  });
 }

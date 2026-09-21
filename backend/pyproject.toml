@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "palwakf-mind-assistant"
-version = "1.5.0"
-description = "PalWakf Mind Assistant final integrated governed development candidate"
+version = "1.6.0"
+description = "PalWakf Mind Assistant L5 reliable production candidate"
 requires-python = ">=3.12,<3.14"
 dependencies = [
   "fastapi>=0.116,<1",

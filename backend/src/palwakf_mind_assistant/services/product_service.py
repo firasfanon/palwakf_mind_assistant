@@ -72,7 +72,7 @@ from palwakf_mind_assistant.services.mega_batch_core import envelope_for
 from palwakf_mind_assistant.services.planning_engine import PlanningEngine
 from palwakf_mind_assistant.services.portability_service import PortabilityService
 from palwakf_mind_assistant.services.provider_evaluation_registry import ProviderEvaluationRegistry
-from palwakf_mind_assistant.services.recovery_service import RecoveryService
+from palwakf_mind_assistant.services.reliability_service import ReliabilityService
 from palwakf_mind_assistant.services.repository_analyzer import RepositoryAnalyzer
 from palwakf_mind_assistant.services.security_engine import SecurityEngine
 from palwakf_mind_assistant.services.skill_resolver import SkillResolver
@@ -133,10 +133,10 @@ class ProductService:
         self._execution = ExecutionGateway()
         self._agents = AgentOrchestrator()
         self._lifecycle = GovernedDevelopmentLifecycleService()
-        self._watchers = WatcherService()
-        self._health = HealthService()
+        self._watchers = WatcherService(resolver)
+        self._health = HealthService(resolver, provider_mode=provider_mode)
         self._cost = CostIntelligence()
-        self._recovery = RecoveryService()
+        self._reliability = ReliabilityService(resolver)
         self._portability = PortabilityService()
 
     def list_skills(self) -> tuple[SkillObject, ...]:
@@ -249,14 +249,19 @@ class ProductService:
         return self._lifecycle.simulate(project_id)
 
     def operations(self, project_id: str) -> OperationsSnapshot:
+        normalized = project_id.strip().upper()
+        connector = self._resolver.connector_health()
         return OperationsSnapshot(
-            project_id=project_id,
-            watchers=self._watchers.definitions(project_id),
-            watcher_events=self._watchers.evaluate(project_id),
+            project_id=normalized,
+            source_mode=connector.mode,
+            watchers=self._watchers.definitions(normalized),
+            watcher_events=self._watchers.evaluate(normalized),
             connector_health=self._health.connector_health(),
             model_health=self._health.model_health(),
             costs=self._cost.observe(),
-            recovery=self._recovery.drill(),
+            recovery=self._reliability.rebuild_drill(),
+            resume=self._reliability.resume_receipt(normalized),
+            readiness=self._reliability.readiness(normalized),
             portability=self._portability.export(),
         )
 

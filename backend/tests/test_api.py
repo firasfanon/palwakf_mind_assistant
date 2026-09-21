@@ -142,3 +142,26 @@ def test_skill_resolver_selects_flutter_without_execution_authority() -> None:
     assert selected['PALWAKF_FLUTTER_PRODUCT_FIRST_RUN_GATE_V1']['execution_authorized'] is False
     assert body['autonomous_execution'] is False
     assert body['mutation_mode'] == 'READ_ONLY'
+
+
+def test_readiness_reports_l5_candidate_dimensions_without_production_claim():
+    response = client.get("/ready")
+    assert response.status_code == 200
+    body = response.json()
+    assert body["status"] == "ready"
+    assert body["mutation_mode"] == "READ_ONLY"
+    assert body["blocking_dimensions"] == []
+    dimensions = {item["dimension"]: item for item in body["dimensions"]}
+    assert dimensions["ZERO_LOSS_REBUILD"]["status"] == "PASS"
+    assert dimensions["RESTART_RESUME_IDEMPOTENCY"]["status"] == "PASS"
+    assert dimensions["LIVE_SOURCE_VERIFICATION"]["status"] == "REVIEW"
+
+
+def test_degraded_live_source_blocks_readiness():
+    live_app = create_app(source_mode="drive_rest", access_token="")
+    live = TestClient(live_app)
+    response = live.get("/ready")
+    assert response.status_code == 503
+    body = response.json()
+    assert body["status"] == "blocked"
+    assert "CONNECTOR_HEALTH" in body["blocking_dimensions"]

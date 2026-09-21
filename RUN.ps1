@@ -28,18 +28,30 @@ $PythonExe = Assert-Command 'python'
 $null = Assert-Command 'flutter'
 $null = Assert-Command 'dart'
 
+$GitExe = Assert-Command 'git'
+Push-Location $Root
+try {
+  $env:MIND_REPOSITORY_HEAD_SHA = (& $GitExe rev-parse HEAD).Trim()
+  if ($LASTEXITCODE -ne 0) { throw 'GIT_HEAD_READ_FAILED' }
+  $env:MIND_REPOSITORY_REF = (& $GitExe branch --show-current).Trim()
+  if ($LASTEXITCODE -ne 0) { throw 'GIT_REF_READ_FAILED' }
+}
+finally {
+  Pop-Location
+}
+Write-Host ('RUNTIME_GIT_HEAD={0}' -f $env:MIND_REPOSITORY_HEAD_SHA)
+Write-Host ('RUNTIME_GIT_REF={0}' -f $env:MIND_REPOSITORY_REF)
+
 if (-not (Test-Path (Join-Path $Frontend 'web\index.html'))) {
   throw 'WEB_PLATFORM_SCAFFOLD_MISSING'
 }
 
-Write-Host '=== PALWAKF MIND ASSISTANT FINAL INTEGRATED MEGA BATCH TEST ==='
+Write-Host '=== PALWAKF MIND ASSISTANT L5 RELIABLE PRODUCTION CANDIDATE TEST ==='
 Write-Host '[1/6] Backend repository-native gates'
 Push-Location $Backend
 try {
   & $PythonExe -m pip install -e '.[dev]'
   if ($LASTEXITCODE -ne 0) { throw 'BACKEND_DEPENDENCY_INSTALL_FAILED' }
-  & $PythonExe -m ruff check --fix src tests
-  if ($LASTEXITCODE -ne 0) { throw 'BACKEND_RUFF_AUTOFIX_FAILED' }
   & $PythonExe -m ruff check src tests
   if ($LASTEXITCODE -ne 0) { throw 'BACKEND_RUFF_LINT_FAILED' }
   & $PythonExe -m compileall -q src tests
@@ -90,7 +102,11 @@ try {
   }
   Write-Host 'BACKEND_HEALTH_GATE=PASS'
 
-  Write-Host 'FINAL_MEGA_BATCH_API_SMOKE=START'
+  $Ready = Invoke-RestMethod -Uri "$ApiBaseUrl/ready" -Method Get -TimeoutSec 5
+  if ($Ready.status -ne 'ready') { throw 'BACKEND_READINESS_GATE_FAILED' }
+  Write-Host 'BACKEND_READINESS_GATE=PASS'
+
+  Write-Host 'L5_API_SMOKE=START'
   $Headers = @{ 'Content-Type' = 'application/json; charset=utf-8' }
 
   $PlanningBody = @{
@@ -112,6 +128,12 @@ try {
 
   $Repository = Invoke-RestMethod -Uri "$ApiBaseUrl/v1/repositories/PALWAKF_MIND_ASSISTANT" -Method Get
   if ($Repository.mutation_ready -ne $false) { throw 'REPOSITORY_MUTATION_READY_FALSE_GATE_FAILED' }
+  if ($Repository.snapshot.current_ref.head_sha -ne $env:MIND_REPOSITORY_HEAD_SHA) {
+    throw 'REPOSITORY_RUNTIME_HEAD_MISMATCH'
+  }
+  if ($Repository.snapshot.current_ref.ref -ne $env:MIND_REPOSITORY_REF) {
+    throw 'REPOSITORY_RUNTIME_REF_MISMATCH'
+  }
 
   $ExecutionBody = @{
     project_id = 'PALWAKF_MIND_ASSISTANT'
@@ -130,8 +152,12 @@ try {
 
   $Operations = Invoke-RestMethod -Uri "$ApiBaseUrl/v1/operations/PALWAKF_MIND_ASSISTANT" -Method Get
   if ($Operations.recovery.canonical_data_loss -ne $false) { throw 'RECOVERY_CANONICAL_DATA_LOSS_GATE_FAILED' }
+  if ($Operations.recovery.accepted_knowledge_loss_count -ne 0) { throw 'RECOVERY_ZERO_LOSS_GATE_FAILED' }
+  if ($Operations.resume.resume_safe -ne $true) { throw 'RESUME_SAFETY_GATE_FAILED' }
+  $BlockedDimensions = @($Operations.readiness | Where-Object { $_.status -eq 'BLOCKED' })
+  if ($BlockedDimensions.Count -ne 0) { throw 'OPERATIONS_READINESS_BLOCKED' }
 
-  Write-Host 'FINAL_MEGA_BATCH_API_SMOKE=PASS'
+  Write-Host 'L5_API_SMOKE=PASS'
 
   Write-Host '[3/6] Flutter format/analyze/test gates'
   Push-Location $Frontend
@@ -139,8 +165,6 @@ try {
     flutter pub get
     if ($LASTEXITCODE -ne 0) { throw 'FLUTTER_PUB_GET_FAILED' }
 
-    dart format lib test
-    if ($LASTEXITCODE -ne 0) { throw 'DART_FORMAT_WRITE_FAILED' }
     dart format --output=none --set-exit-if-changed lib test
     if ($LASTEXITCODE -ne 0) { throw 'DART_FORMAT_IDEMPOTENCE_FAILED' }
 

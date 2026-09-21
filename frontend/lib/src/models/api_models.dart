@@ -685,11 +685,17 @@ class GovernedCapabilityView {
     final authorized =
         encoded.contains('mutation_executed: true') &&
         encoded.contains('authorized: true');
+    final snapshot =
+        (json['snapshot'] as Map?)?.cast<String, dynamic>() ?? const {};
+    final trustLabel =
+        json['source_mode']?.toString() ??
+        snapshot['source_mode']?.toString() ??
+        'FIXTURE_DERIVED';
     return GovernedCapabilityView(
       surface: surface,
       title: _surfaceTitle(surface),
       status: status,
-      trustLabel: 'FIXTURE_DERIVED',
+      trustLabel: trustLabel,
       mutationMode: mutationMode,
       authorizationLabel:
           authorized ? 'EXECUTION AUTHORIZED' : 'EXECUTION NOT AUTHORIZED',
@@ -795,11 +801,27 @@ class GovernedCapabilityView {
           'Blocked gates cannot be skipped',
         ];
       case 'operations':
+        final recovery =
+            (json['recovery'] as Map?)?.cast<String, dynamic>() ?? const {};
+        final resume =
+            (json['resume'] as Map?)?.cast<String, dynamic>() ?? const {};
+        final readiness = ((json['readiness'] as List?) ?? const [])
+            .whereType<Map>()
+            .map((item) => item.cast<String, dynamic>())
+            .toList(growable: false);
+        final blocked = readiness
+            .where((item) => item['status'] == 'BLOCKED')
+            .map((item) => item['dimension'].toString())
+            .toList(growable: false);
         return [
-          'Watchers notify/propose only',
-          'Model and connector health',
-          'Derived-store rebuild/restore drill',
-          'Provider-neutral portability and cost observations',
+          "SOURCE MODE ${json['source_mode'] ?? 'UNKNOWN'}",
+          "REBUILD ${recovery['status'] ?? 'UNKNOWN'}",
+          'ACCEPTED KNOWLEDGE LOSS '
+              "${recovery['accepted_knowledge_loss_count'] ?? 'UNKNOWN'}",
+          "RESUME SAFE ${resume['resume_safe'] ?? false}",
+          "READINESS BLOCKERS ${blocked.isEmpty ? 'NONE' : blocked.join(', ')}",
+          'Watchers notify/propose only; canonical authority stays in Workspace Drive',
+          'Production approval is separate from this readiness surface',
         ];
       default:
         return [json.toString()];

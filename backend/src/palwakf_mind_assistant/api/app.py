@@ -3,10 +3,11 @@ from __future__ import annotations
 import os
 import re
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import Body, FastAPI, Query, Request
+from fastapi import Body, FastAPI, Query, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from palwakf_mind_assistant.adapters.drive_readonly import (
@@ -92,6 +93,51 @@ def _build_drive_adapter(
     return InMemoryDriveReadOnlyAdapter(sources)
 
 
+def _overlay_runtime_git_state(
+    states: tuple[ProjectOperationalState, ...],
+) -> tuple[ProjectOperationalState, ...]:
+    head_sha = (
+        os.getenv("MIND_REPOSITORY_HEAD_SHA")
+        or os.getenv("VERCEL_GIT_COMMIT_SHA")
+    )
+    ref = (
+        os.getenv("MIND_REPOSITORY_REF")
+        or os.getenv("VERCEL_GIT_COMMIT_REF")
+    )
+    exact_identity = bool(head_sha and ref)
+    output: list[ProjectOperationalState] = []
+    for state in states:
+        if state.project_id.upper() != "PALWAKF_MIND_ASSISTANT":
+            output.append(state)
+            continue
+        output.append(
+            state.model_copy(
+                update={
+                    "source_mode": (
+                        "RUNTIME_GIT_OVERLAY"
+                        if exact_identity
+                        else "RUNTIME_GIT_IDENTITY_REQUIRED"
+                    ),
+                    "observed_at": datetime.now(UTC),
+                    "head_sha": head_sha if exact_identity else "UNKNOWN",
+                    "active_branch": ref if exact_identity else None,
+                    "risks": (
+                        ("RUNTIME_GIT_IDENTITY_READ_ONLY",)
+                        if exact_identity
+                        else ("LIVE_GIT_IDENTITY_UNAVAILABLE",)
+                    ),
+                    "next_safe_action": (
+                        "USE_EXACT_RUNTIME_IDENTITY_FOR_READ_ONLY_EVIDENCE;"
+                        "RECONCILE_BEFORE_ANY_MUTATION"
+                        if exact_identity
+                        else "RECONCILE_LIVE_GIT_IDENTITY_BEFORE_MUTATION"
+                    ),
+                }
+            )
+        )
+    return tuple(output)
+
+
 def create_app(
     *,
     sources: tuple[SourceRef, ...] | None = None,
@@ -104,7 +150,9 @@ def create_app(
     state_catalog = (
         operational_states
         if operational_states is not None
-        else load_project_state_fixture(PROJECT_STATE_FIXTURE)
+        else _overlay_runtime_git_state(
+            load_project_state_fixture(PROJECT_STATE_FIXTURE)
+        )
     )
     skill_catalog = skills if skills is not None else load_skill_fixture(SKILL_FIXTURE)
     configured_source_mode = source_mode or os.getenv("MIND_SOURCE_MODE", "fixture")
@@ -127,7 +175,7 @@ def create_app(
 
     application = FastAPI(
         title="PalWakf Mind Assistant",
-        version="1.5.0-final-integrated-mega-batch-candidate",
+        version="1.6.0-l5-reliable-production-candidate",
     )
     allowed_origins = tuple(
         origin.strip()
@@ -169,6 +217,25 @@ def create_app(
             ),
             "provider_mode": provider_mode,
             "source_mode": configured_source_mode.upper(),
+        }
+
+    @application.get("/ready")
+    def readiness(response: Response) -> dict[str, object]:
+        snapshot = product.operations("PALWAKF_MIND_ASSISTANT")
+        blocking = tuple(
+            item.dimension
+            for item in snapshot.readiness
+            if item.status == "BLOCKED"
+        )
+        if blocking:
+            response.status_code = 503
+        return {
+            "status": "ready" if not blocking else "blocked",
+            "project_id": snapshot.project_id,
+            "source_mode": snapshot.source_mode,
+            "blocking_dimensions": blocking,
+            "dimensions": snapshot.readiness,
+            "mutation_mode": snapshot.mutation_mode,
         }
 
     @application.get("/v1/authority/projects/{project_id}")
