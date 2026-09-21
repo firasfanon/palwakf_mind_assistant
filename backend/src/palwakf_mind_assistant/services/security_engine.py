@@ -17,16 +17,27 @@ class SecurityEngine:
         injection_markers = (
             "ignore previous",
             "ignore all instructions",
+            "disregard previous",
+            "override system",
             "system prompt",
+            "developer message",
+            "reveal system",
             "bypass authorization",
+            "disable safety",
+            "تجاهل التعليمات",
+            "تجاوز الصلاحيات",
         )
         injection_detected = any(
             marker in normalized for marker in injection_markers
         )
         secret_detected = bool(
             re.search(
-                r"(?i)(password|secret|token|api[_-]?key|service[_-]?role)"
-                r"\s*[:=]\s*\S+",
+                r"(?i)(?:"
+                r"(?:password|secret|token|api[_-]?key|service[_-]?role"
+                r"|github[_-]?token|private[_-]?key)\s*[:=]\s*\S{6,}"
+                r"|authorization\s*:\s*bearer\s*\S{6,}"
+                r"|bearer\s+\S{6,}"
+                r")",
                 text,
             )
         )

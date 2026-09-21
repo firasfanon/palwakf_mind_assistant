@@ -930,7 +930,31 @@ class RecoveryReceipt(BaseModel):
     status: str
     rebuildable: bool
     canonical_data_loss: bool
+    source_count: int = 0
+    project_count: int = 0
+    before_digest: str = ""
+    after_digest: str = ""
+    accepted_knowledge_loss_count: int = 0
+    canonical_state_mutated: bool = False
     detail: str
+
+
+class ResumeReceipt(BaseModel):
+    checkpoint_id: str
+    project_id: str
+    source_digest: str
+    completed_action_digest: str
+    duplicate_completed_actions: int = 0
+    stale_checkpoint: bool = False
+    resume_safe: bool = True
+    detail: str
+
+
+class ReadinessDimension(BaseModel):
+    dimension: str
+    status: str
+    detail: str
+    evidence_refs: tuple[str, ...] = ()
 
 
 class PortabilityExportReceipt(BaseModel):
@@ -943,12 +967,16 @@ class PortabilityExportReceipt(BaseModel):
 
 class OperationsSnapshot(BaseModel):
     project_id: str
+    source_mode: str
+    sovereign_authority: str = "PALWAKF_WORKSPACE_DRIVE"
     watchers: tuple[WatcherDefinition, ...]
     watcher_events: tuple[WatcherEvent, ...]
     connector_health: tuple[ConnectorHealthObservation, ...]
     model_health: tuple[ModelHealth, ...]
     costs: tuple[CostObservation, ...]
     recovery: RecoveryReceipt
+    resume: ResumeReceipt
+    readiness: tuple[ReadinessDimension, ...]
     portability: PortabilityExportReceipt
     mutation_mode: str = "READ_ONLY"
 

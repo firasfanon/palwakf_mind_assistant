@@ -1,8 +1,8 @@
-# PalWakf Mind Assistant — Second Integrated Product Batch
+# PalWakf Mind Assistant — L5 Reliable Production Candidate
 
 `PALWAKF_MIND_ASSISTANT` is an independent knowledge-intelligence and curation product. The product has two co-equal user surfaces — **Assistant Workspace** and **Control / Knowledge surfaces** — backed by a shared authority, provenance and conflict-aware core.
 
-## Second-batch product surfaces
+## Product surfaces
 
 - Assistant Workspace with explicit project context and current-session conversation history.
 - Operational Dashboard with authority health, knowledge health, source/connector health and alerts.
@@ -36,29 +36,36 @@ There is no create/update/delete Drive method in this batch.
 - document/provider content is treated as data and cannot expand tool authority;
 - server-side credentials only.
 
-## Local second-batch test
+## Local L5 verification
 
-Extract this ZIP into a **new sibling directory** (do not overwrite the already-tested first-batch project yet), then run:
+Run the target-device candidate with:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\RUN.ps1
 ```
 
-The runner uses dynamic loopback ports for both API and Flutter Web, formats the candidate on the target Flutter toolchain, executes backend and Flutter gates, builds Web explicitly, then launches Chrome for the interaction checklist in `SECOND_BATCH_ACCEPTANCE.md`.
+The runner is non-mutating: it reads the exact Git HEAD/ref into runtime evidence,
+executes backend and Flutter verification, checks liveness and readiness separately,
+verifies repository identity readback, exercises the read-only L5 operations surface,
+builds Web, and launches Chrome for human/browser UAT.
 
-## Current remote boundary
+`/health` is liveness only. `/ready` evaluates authority resolution, connector
+health, deterministic zero-loss rebuild, restart/resume idempotency and canonical
+authority isolation. Fixture mode may be a development candidate but is never a
+production-source certification.
 
-The authoritative GitHub repository remained bootstrap-only at `main@8fc746291043a9de9b0b19c477a2d32ae1a06e8a` when this local batch was activated. This package is **local candidate source only**. It does not represent remote WIP, integration, baseline, deployment or production.
+## L5 reliability and authority boundary
 
-## Final Integrated Development Mega Batch V1
+The L5 candidate preserves the integrated product and hardens reliability rather than
+rebuilding features. Derived-state recovery is verified by deterministic
+serialize/revalidate/digest comparison; accepted knowledge loss must be zero.
+Resume receipts detect stale source state and duplicate completed actions.
+Repository Intelligence fails closed unless exact runtime Git HEAD/ref are supplied.
 
-The current local candidate integrates the remaining roadmap capabilities B0.7–B1.5
-into one governed product increment. It adds planning/impact/decision intelligence,
-independent verification, security/capability control, Engineering Mode,
-repository-aware analysis, simulation-only governed execution, multi-agent
-orchestration contracts, end-to-end governed lifecycle, and operability/recovery
-surfaces.
+Cross-project authorization, client authority widening and out-of-scope paths are
+denied. Watchers remain notify/propose-only. Workspace Drive remains the sovereign
+knowledge authority; Mind cannot self-promote canonical knowledge.
 
-This candidate is **not remote, not integrated, not baseline-promoted, not deployed,
-and not production**. Workspace Drive remains the sovereign knowledge authority and
-GitHub remains the code authority once integration is separately authorized.
+A successful task-branch candidate is **not** a main merge, sovereign baseline,
+production deployment, shared-database authorization or L5 certification. Those are
+separate governed decisions bound to exact evidence and exact heads.

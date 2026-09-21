@@ -5,7 +5,7 @@ class PortabilityService:
     def export(self) -> PortabilityExportReceipt:
         return PortabilityExportReceipt(
             export_id="EXPORT-1",
-            status="PASS_SIMULATED",
+            status="DERIVED_CONTRACT_READY",
             provider_neutral=True,
             contains_secrets=False,
             detail="Portable derived-state contract only.",

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from datetime import UTC, datetime
 
 from palwakf_mind_assistant.domain.models import (
@@ -12,7 +13,24 @@ from palwakf_mind_assistant.domain.models import (
     ToolCapability,
 )
 
-NOW = datetime(2026, 8, 30, tzinfo=UTC)
+
+def _runtime_git_identity() -> tuple[str, str, FreshnessState]:
+    head_sha = (
+        os.getenv("MIND_REPOSITORY_HEAD_SHA")
+        or os.getenv("VERCEL_GIT_COMMIT_SHA")
+        or "UNKNOWN"
+    )
+    ref = (
+        os.getenv("MIND_REPOSITORY_REF")
+        or os.getenv("VERCEL_GIT_COMMIT_REF")
+        or "UNKNOWN"
+    )
+    freshness = (
+        FreshnessState.CURRENT
+        if head_sha != "UNKNOWN" and ref != "UNKNOWN"
+        else FreshnessState.UNKNOWN
+    )
+    return ref, head_sha, freshness
 
 
 def stable_id(prefix: str, *parts: str) -> str:
@@ -77,33 +95,39 @@ def envelope_for(project_id: str) -> CapabilityEnvelope:
 def repository_snapshot(project_id: str) -> RepositorySnapshot | None:
     normalized = project_id.upper()
     if normalized == "PALWAKF_MIND_ASSISTANT":
+        runtime_ref, head_sha, freshness = _runtime_git_identity()
         ref = RepositoryRef(
             repository="firasfanon/palwakf_mind_assistant",
-            ref="main",
-            head_sha="8fc746291043a9de9b0b19c477a2d32ae1a06e8a",
-            observed_at=NOW,
-            freshness=FreshnessState.CURRENT,
+            ref=runtime_ref,
+            head_sha=head_sha,
+            observed_at=datetime.now(UTC),
+            freshness=freshness,
         )
         return RepositorySnapshot(
             project_id=normalized,
             repository=ref.repository,
             default_branch="main",
             current_ref=ref,
+            source_mode=(
+                "RUNTIME_GIT_IDENTITY"
+                if freshness is FreshnessState.CURRENT
+                else "RUNTIME_GIT_IDENTITY_REQUIRED"
+            ),
             files=(
                 RepositoryFileRef(
                     path="README.md",
                     repository=ref.repository,
-                    ref="main",
-                    head_sha=ref.head_sha,
+                    ref=runtime_ref,
+                    head_sha=head_sha,
                 ),
             ),
         )
     if normalized == "PAL_EYES":
         ref = RepositoryRef(
             repository="firasfanon/palwakf_Eyes",
-            ref="main",
+            ref="UNKNOWN",
             head_sha="UNKNOWN",
-            observed_at=NOW,
+            observed_at=datetime.now(UTC),
             freshness=FreshnessState.UNKNOWN,
         )
         return RepositorySnapshot(

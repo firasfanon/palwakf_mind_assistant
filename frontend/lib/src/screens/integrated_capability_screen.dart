@@ -93,11 +93,11 @@ class _IntegratedCapabilityScreenState
             child: Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: const [
-                StatusPill('DERIVED'),
-                StatusPill('FIXTURE_DERIVED'),
-                StatusPill('NOT SOURCE OF TRUTH'),
-                StatusPill('HUMAN REVIEW'),
+              children: [
+                const StatusPill('DERIVED'),
+                StatusPill(view.trustLabel),
+                const StatusPill('NOT SOURCE OF TRUTH'),
+                const StatusPill('HUMAN REVIEW'),
               ],
             ),
           ),
@@ -105,17 +105,26 @@ class _IntegratedCapabilityScreenState
           SectionCard(
             title: 'Governed capability',
             icon: Icons.account_tree_outlined,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (final detail in view.details) ...[
-                  SelectableText(
-                    detail,
-                    style: const TextStyle(color: MindTheme.muted, height: 1.5),
-                  ),
-                  const SizedBox(height: 8),
-                ],
-              ],
+            child: Semantics(
+              container: true,
+              label: view.details.join(' • '),
+              child: ExcludeSemantics(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    for (final detail in view.details) ...[
+                      SelectableText(
+                        detail,
+                        style: const TextStyle(
+                          color: MindTheme.muted,
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ],
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 14),

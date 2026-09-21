@@ -336,4 +336,67 @@ void main() {
     expect(find.text('AUTH RESOLVED'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  test('operations payload exposes L5 rebuild and resume evidence', () {
+    final view = GovernedCapabilityView.fromJson('operations', {
+      'source_mode': 'FIXTURE_DERIVED',
+      'mutation_mode': 'READ_ONLY',
+      'recovery': {
+        'status': 'PASS_REBUILT_FROM_ACTIVE_SOURCES',
+        'accepted_knowledge_loss_count': 0,
+      },
+      'resume': {'resume_safe': true},
+      'readiness': [
+        {'dimension': 'ZERO_LOSS_REBUILD', 'status': 'PASS'},
+        {'dimension': 'LIVE_SOURCE_VERIFICATION', 'status': 'REVIEW'},
+      ],
+    });
+    expect(view.trustLabel, 'FIXTURE_DERIVED');
+    expect(view.details, contains('REBUILD PASS_REBUILT_FROM_ACTIVE_SOURCES'));
+    expect(view.details, contains('ACCEPTED KNOWLEDGE LOSS 0'));
+    expect(view.details, contains('RESUME SAFE true'));
+    expect(view.details, contains('READINESS BLOCKERS NONE'));
+  });
+
+  test('repository runtime identity is labeled as read-only evidence', () {
+    final view = GovernedCapabilityView.fromJson('repository', {
+      'status': 'RESOLVED',
+      'snapshot': {
+        'repository': 'firasfanon/palwakf_mind_assistant',
+        'source_mode': 'RUNTIME_GIT_IDENTITY',
+        'current_ref': {
+          'ref': 'task/MIND-L5-ONE-MEGA-BATCH-V1',
+          'head_sha': 'abc123',
+        },
+      },
+    });
+    expect(view.trustLabel, 'RUNTIME_GIT_IDENTITY');
+    expect(
+      view.details,
+      contains(
+        'Runtime Git identity is read-only evidence; GitHub remains code authority',
+      ),
+    );
+    expect(
+      view.details,
+      isNot(contains('Fixture-derived snapshot is not live Git authority')),
+    );
+  });
+
+  testWidgets('governed capability details are exposed to browser semantics', (
+    tester,
+  ) async {
+    await _pumpAt(tester, const Size(1200, 900));
+    await tester.ensureVisible(find.text('Operations'));
+    await tester.tap(find.text('Operations'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.bySemanticsLabel(
+        'Derived controlled surface • Human review required before mutation',
+      ),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
+  });
 }
