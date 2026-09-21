@@ -357,4 +357,46 @@ void main() {
     expect(view.details, contains('RESUME SAFE true'));
     expect(view.details, contains('READINESS BLOCKERS NONE'));
   });
+
+  test('repository runtime identity is labeled as read-only evidence', () {
+    final view = GovernedCapabilityView.fromJson('repository', {
+      'status': 'RESOLVED',
+      'snapshot': {
+        'repository': 'firasfanon/palwakf_mind_assistant',
+        'source_mode': 'RUNTIME_GIT_IDENTITY',
+        'current_ref': {
+          'ref': 'task/MIND-L5-ONE-MEGA-BATCH-V1',
+          'head_sha': 'abc123',
+        },
+      },
+    });
+    expect(view.trustLabel, 'RUNTIME_GIT_IDENTITY');
+    expect(
+      view.details,
+      contains(
+        'Runtime Git identity is read-only evidence; GitHub remains code authority',
+      ),
+    );
+    expect(
+      view.details,
+      isNot(contains('Fixture-derived snapshot is not live Git authority')),
+    );
+  });
+
+  testWidgets('governed capability details are exposed to browser semantics', (
+    tester,
+  ) async {
+    await _pumpAt(tester, const Size(1200, 900));
+    await tester.ensureVisible(find.text('Operations'));
+    await tester.tap(find.text('Operations'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.bySemanticsLabel(
+        'Derived controlled surface • Human review required before mutation',
+      ),
+      findsOneWidget,
+    );
+    expect(tester.takeException(), isNull);
+  });
 }

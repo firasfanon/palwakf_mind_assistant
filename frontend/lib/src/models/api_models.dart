@@ -772,11 +772,14 @@ class GovernedCapabilityView {
         final current =
             (snapshot['current_ref'] as Map?)?.cast<String, dynamic>() ??
             const {};
+        final sourceMode = snapshot['source_mode']?.toString() ?? 'UNKNOWN';
         return [
           'REPO ${snapshot['repository'] ?? 'UNKNOWN'}',
           'REF ${current['ref'] ?? 'UNKNOWN'}',
           'HEAD ${current['head_sha'] ?? 'UNKNOWN'}',
-          'Fixture-derived snapshot is not live Git authority',
+          sourceMode == 'RUNTIME_GIT_IDENTITY'
+              ? 'Runtime Git identity is read-only evidence; GitHub remains code authority'
+              : 'Repository identity requires live Git reconciliation before mutation',
         ];
       case 'execution':
         return [
