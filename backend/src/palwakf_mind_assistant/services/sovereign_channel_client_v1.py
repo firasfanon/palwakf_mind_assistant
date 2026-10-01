@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from collections.abc import Mapping
 from datetime import UTC, datetime, timedelta
-from typing import Any, Mapping, Protocol
+from typing import Any, Protocol
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -40,7 +41,7 @@ class MindRemoteIntentRequestV1(BaseModel):
     ttl_seconds: int = Field(default=900, ge=30, le=3600)
 
     @model_validator(mode="after")
-    def validate_scope(self) -> "MindRemoteIntentRequestV1":
+    def validate_scope(self) -> MindRemoteIntentRequestV1:
         mutation_class = MIND_CAPABILITY_CLASSES.get(self.capability_id)
         if mutation_class is None:
             raise ValueError("MIND_CAPABILITY_NOT_ALLOWED")

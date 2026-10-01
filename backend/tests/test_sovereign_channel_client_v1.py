@@ -9,7 +9,6 @@ from palwakf_mind_assistant.services.sovereign_channel_client_v1 import (
     MindSovereignChannelClientV1,
 )
 
-
 HEAD = "1" * 40
 
 
